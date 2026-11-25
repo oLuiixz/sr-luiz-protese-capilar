@@ -41,3 +41,24 @@ videoDialog?.addEventListener("close",()=>{
   galleryPlayer.removeAttribute("src");
   galleryPlayer.load();
 });
+
+/* A small pair of scissors glides across the page as the visitor scrolls. */
+const scrollScissors=document.querySelector(".scroll-scissors");
+let scissorsFrame=0;
+function moveScrollScissors(){
+  if(!scrollScissors||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  cancelAnimationFrame(scissorsFrame);
+  scissorsFrame=requestAnimationFrame(()=>{
+    const range=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
+    const progress=window.scrollY/range;
+    const cycle=(progress*4.2)%1;
+    const x=-75+cycle*(window.innerWidth+150);
+    const y=Math.sin(cycle*Math.PI*2)*34;
+    const visible=cycle>.04&&cycle<.96;
+    scrollScissors.style.opacity=visible?".82":"0";
+    scrollScissors.style.transform="translate3d("+x+"px,"+y+"px,0) rotate("+(cycle*360-30)+"deg)";
+  });
+}
+window.addEventListener("scroll",moveScrollScissors,{passive:true});
+window.addEventListener("resize",moveScrollScissors);
+moveScrollScissors();
