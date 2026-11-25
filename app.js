@@ -76,3 +76,5 @@ function moveScrollScissors(){
 window.addEventListener("scroll",moveScrollScissors,{passive:true});
 window.addEventListener("resize",moveScrollScissors);
 moveScrollScissors();
+
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(error=>console.warn("PWA indisponível",error)));
