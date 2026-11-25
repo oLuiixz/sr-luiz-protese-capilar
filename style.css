@@ -90,3 +90,85 @@
  .header .uiverse-send-button>span:last-child{font-size:7px}
 }
 @media(prefers-reduced-motion:reduce){.uiverse-send-button:hover .svg-wrapper{animation:none}.uiverse-send-button .svg-wrapper,.uiverse-send-button .svg-wrapper svg,.uiverse-send-button>span:last-child{transition:none}}
+
+
+/* Uiverse staggered-letter button, adapted to SR Luiz black and gold identity */
+.uiverse-letter-button{
+  --letter-bg:var(--yellow);
+  --letter-ink:#11100b;
+  --letter-shadow:#a77b00;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:56px;
+  min-height:56px;
+  position:relative;
+  padding:0 22px;
+  border:1px solid var(--yellow);
+  border-radius:4px;
+  overflow:hidden;
+  background:var(--letter-bg);
+  color:var(--letter-ink);
+  box-shadow:var(--letter-shadow) 0 5px 0 0;
+  font:700 14px var(--font);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  text-decoration:none;
+  cursor:pointer;
+  transition:transform 35ms cubic-bezier(.5,.7,.4,1),box-shadow 35ms cubic-bezier(.5,.7,.4,1),background .2s ease;
+}
+.uiverse-letter-button:before{
+  content:attr(alt);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:absolute;
+  inset:0;
+  padding:0 12px;
+  color:var(--letter-ink);
+  font:800 10px var(--font);
+  letter-spacing:1.5px;
+  text-align:center;
+  opacity:1;
+  transition:opacity .12s ease,transform .12s ease;
+}
+.uiverse-letter-button i{
+  display:block;
+  color:var(--letter-ink);
+  font:800 14px var(--font);
+  letter-spacing:2px;
+  font-style:normal;
+  transform:translateY(-20px);
+  opacity:0;
+  transition:transform 2s ease,opacity 2s ease;
+}
+.uiverse-letter-button i.letter-space{width:.55em;flex:none}
+.uiverse-letter-button:hover:before{transform:translateY(100%);opacity:0;transition:all 0s}
+.uiverse-letter-button:hover i{transform:translateY(0);opacity:1;transition:all .2s ease}
+.uiverse-letter-button:hover i:nth-child(1){transition-delay:.045s}
+.uiverse-letter-button:hover i:nth-child(2){transition-delay:calc(.045s * 3)}
+.uiverse-letter-button:hover i:nth-child(3){transition-delay:calc(.045s * 4)}
+.uiverse-letter-button:hover i:nth-child(4){transition-delay:calc(.045s * 5)}
+.uiverse-letter-button:hover i:nth-child(6){transition-delay:calc(.045s * 6)}
+.uiverse-letter-button:hover i:nth-child(7){transition-delay:calc(.045s * 7)}
+.uiverse-letter-button:hover i:nth-child(8){transition-delay:calc(.045s * 8)}
+.uiverse-letter-button:hover i:nth-child(9){transition-delay:calc(.045s * 9)}
+.uiverse-letter-button:hover i:nth-child(10){transition-delay:calc(.045s * 10)}
+.uiverse-letter-button:active{box-shadow:none;transform:translateY(5px);transition:35ms cubic-bezier(.5,.7,.4,1)}
+.uiverse-letter-button:focus-visible{outline:2px solid var(--white);outline-offset:5px}
+.header .uiverse-letter-button{height:46px;min-height:46px;padding:0 16px;border-radius:4px;font-size:11px;letter-spacing:1.3px}
+.header .uiverse-letter-button:before{font-size:8px;letter-spacing:1px}
+.header .uiverse-letter-button i{font-size:11px;letter-spacing:1.3px}
+@media(max-width:640px){
+ .header .uiverse-letter-button{height:42px;min-height:42px;padding:0 10px}
+ .header .uiverse-letter-button:before{font-size:7px;letter-spacing:.7px}
+ .header .uiverse-letter-button i{font-size:9px;letter-spacing:1px}
+ .hero-actions .uiverse-letter-button,.booking-form .uiverse-letter-button{width:100%;height:54px;min-height:54px;padding:0 12px}
+ .uiverse-letter-button:before{font-size:9px;letter-spacing:1px}
+ .uiverse-letter-button i{font-size:12px;letter-spacing:1.4px}
+}
+@media(prefers-reduced-motion:reduce){
+ .uiverse-letter-button,.uiverse-letter-button:before,.uiverse-letter-button i{transition:none!important}
+ .uiverse-letter-button i{transform:none;opacity:0}
+ .uiverse-letter-button:hover i{opacity:1}
+}
