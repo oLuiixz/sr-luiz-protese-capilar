@@ -11,3 +11,33 @@ async function loadSlots(){timeSelect.disabled=true;timeSelect.innerHTML='<optio
 serviceSelect?.addEventListener("change",loadSlots);dateInput?.addEventListener("change",loadSlots);
 form?.addEventListener("submit",async e=>{e.preventDefault();if(!form.reportValidity())return;const data=new FormData(form);const button=form.querySelector('button[type="submit"]');button.disabled=true;feedback.textContent="Confirmando sua reserva...";try{const r=await fetch("/api/bookings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:data.get("name"),phone:data.get("phone"),service_id:data.get("service_id"),date:data.get("date"),time:data.get("time")})}),d=await r.json();if(!r.ok)throw Error(d.error||"Não foi possível reservar.");const when=new Date(d.appointment.starts_at).toLocaleString("pt-BR",{dateStyle:"full",timeStyle:"short"});feedback.textContent="Agendamento confirmado! "+d.appointment.service_name+" · "+when+". Seu horário está reservado.";form.reset();dateInput.min=localToday;timeSelect.innerHTML='<option value="">Selecione serviço e data</option>';timeSelect.disabled=true;}catch(err){feedback.textContent=err.message;await loadSlots();}finally{button.disabled=false;}});
 loadServices();
+
+/* Video gallery lightbox */
+const videoDialog=document.querySelector("#videoDialog");
+const galleryPlayer=document.querySelector("#galleryPlayer");
+const closeVideoButton=videoDialog?.querySelector(".video-dialog-close");
+document.querySelectorAll(".video-card[data-video]").forEach(card=>{
+  card.addEventListener("click",()=>{
+    if(!videoDialog||!galleryPlayer)return;
+    galleryPlayer.src=card.dataset.video;
+    videoDialog.showModal();
+    galleryPlayer.play().catch(()=>{});
+  });
+});
+function closeGalleryVideo(){
+  if(!videoDialog||!galleryPlayer)return;
+  galleryPlayer.pause();
+  galleryPlayer.removeAttribute("src");
+  galleryPlayer.load();
+  if(videoDialog.open)videoDialog.close();
+}
+closeVideoButton?.addEventListener("click",closeGalleryVideo);
+videoDialog?.addEventListener("click",event=>{
+  if(event.target===videoDialog)closeGalleryVideo();
+});
+videoDialog?.addEventListener("close",()=>{
+  if(!galleryPlayer)return;
+  galleryPlayer.pause();
+  galleryPlayer.removeAttribute("src");
+  galleryPlayer.load();
+});
