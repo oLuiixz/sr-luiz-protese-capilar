@@ -68,11 +68,28 @@
 
       <section class="gallery section-pad" id="galeria">
         <div class="section-kicker reveal"><span>03</span> / NOSSO UNIVERSO</div>
-        <div class="gallery-head reveal"><h2>ESTILO QUE<br><span>SE PERCEBE.</span></h2><p>Um pouco do ambiente, da técnica<br>e da identidade SR Luiz.</p></div>
-        <div class="gallery-grid">
-          <figure class="gallery-item gallery-large reveal"><img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1100&q=85" alt="Barbeiro realizando um corte" /><figcaption><span>01</span> PRECISÃO</figcaption></figure>
-          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=85" alt="Detalhe de corte masculino" /><figcaption><span>02</span> IDENTIDADE</figcaption></figure>
-          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=900&q=85" alt="Ferramentas profissionais de barbearia" /><figcaption><span>03</span> CUIDADO</figcaption></figure>
+        <div class="gallery-head reveal"><h2>RESULTADOS EM<br><span>MOVIMENTO.</span></h2><p>Conheça de perto o trabalho<br>e a experiência SR Luiz.</p></div>
+        <div class="video-gallery">
+          <button class="video-card reveal" type="button" data-video="https://res.cloudinary.com/potepkug/video/upload/v1795626263/7t0if4.mp4" aria-label="Reproduzir vídeo 1">
+            <img src="https://res.cloudinary.com/potepkug/video/upload/so_1,f_jpg/v1795626263/7t0if4.jpg" alt="" loading="lazy" />
+            <span class="video-card-shade"></span><span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 6 10 6-10 6z"/></svg></span>
+            <span class="video-card-caption"><small>SR LUIZ / 01</small><strong>VER VÍDEO</strong></span>
+          </button>
+          <button class="video-card reveal" type="button" data-video="https://res.cloudinary.com/potepkug/video/upload/v1795626263/it453b.mp4" aria-label="Reproduzir vídeo 2">
+            <img src="https://res.cloudinary.com/potepkug/video/upload/so_1,f_jpg/v1795626263/it453b.jpg" alt="" loading="lazy" />
+            <span class="video-card-shade"></span><span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 6 10 6-10 6z"/></svg></span>
+            <span class="video-card-caption"><small>SR LUIZ / 02</small><strong>VER VÍDEO</strong></span>
+          </button>
+          <button class="video-card reveal" type="button" data-video="https://res.cloudinary.com/potepkug/video/upload/v1795626265/snapinsta-1795607847925.mp4" aria-label="Reproduzir vídeo 3">
+            <img src="https://res.cloudinary.com/potepkug/video/upload/so_1,f_jpg/v1795626265/snapinsta-1795607847925.jpg" alt="" loading="lazy" />
+            <span class="video-card-shade"></span><span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 6 10 6-10 6z"/></svg></span>
+            <span class="video-card-caption"><small>SR LUIZ / 03</small><strong>VER VÍDEO</strong></span>
+          </button>
+          <button class="video-card reveal" type="button" data-video="https://res.cloudinary.com/potepkug/video/upload/v1795626267/snapinsta-1795607826926.mp4" aria-label="Reproduzir vídeo 4">
+            <img src="https://res.cloudinary.com/potepkug/video/upload/so_1,f_jpg/v1795626267/snapinsta-1795607826926.jpg" alt="" loading="lazy" />
+            <span class="video-card-shade"></span><span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 6 10 6-10 6z"/></svg></span>
+            <span class="video-card-caption"><small>SR LUIZ / 04</small><strong>VER VÍDEO</strong></span>
+          </button>
         </div>
       </section>
 
@@ -95,6 +112,10 @@
         <div class="contact-grid"><div class="reveal"><p class="micro-label">VAMOS MARCAR?</p><h2>PASSA<br><span>AQUI.</span></h2><p class="contact-desc">Estamos prontos para receber você. Entre em contato para tirar dúvidas e encontrar o melhor horário.</p></div><div class="contact-details reveal"><div><small>ENDEREÇO</small><p>Endereço da barbearia<br><span>Localização será adicionada em breve</span></p></div><div><small>HORÁRIOS</small><p>Segunda a sábado<br><span>Horários sob confirmação</span></p></div><div><small>CONTATO</small><p>WhatsApp / Instagram<br><span>Dados oficiais em atualização</span></p></div><a class="underlined-link" href="#agendar">FALE COM A GENTE <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
       </section>
     </main>
+    <dialog class="video-dialog" id="videoDialog" aria-label="Reprodutor de vídeo">
+      <button class="video-dialog-close" type="button" aria-label="Fechar vídeo"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      <video id="galleryPlayer" controls playsinline preload="none"></video>
+    </dialog>
     <footer class="footer"><a class="brand footer-brand" href="#top"><span class="brand-logo-wrap"><img class="brand-logo" src="/imagens/image0.jpeg" alt="Logo SR Luiz Barbearia" /></span><span class="brand-copy"><strong>SR LUIZ</strong><small>BARBEARIA</small></span></a><span class="footer-line">SEU ESTILO. SUA ASSINATURA.</span><span class="footer-copy">© 2026 SR LUIZ BARBEARIA</span><a href="#top" class="back-top">VOLTAR AO TOPO <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></a></footer>
     <script type="module" src="/app.js"></script>
   </body>
