@@ -66,3 +66,27 @@
  .service-arrow{width:40px;height:40px}
 }
 @media(prefers-reduced-motion:reduce){.uiverse-button,.uiverse-button:before,.uiverse-button:after,.uiverse-button .button-icon,.service-arrow,.service-arrow:before{transition:none}}
+
+
+/* Animated paper-plane buttons, based on the requested Uiverse interaction */
+.uiverse-send-button{gap:0;justify-content:flex-start;padding:0 22px;transition:background .2s ease,color .2s ease,transform .2s ease}
+.uiverse-send-button .svg-wrapper-1{display:flex;align-items:center;justify-content:center;flex:none}
+.uiverse-send-button .svg-wrapper{display:flex;align-items:center;justify-content:center;transform-origin:center;transition:transform .3s ease-in-out}
+.uiverse-send-button .svg-wrapper svg{display:block;width:21px;height:21px;fill:currentColor;stroke:none;transform-origin:center center;transition:transform .3s ease-in-out}
+.uiverse-send-button>span:last-child{display:block;margin-left:12px;white-space:nowrap;transition:transform .3s ease-in-out}
+.uiverse-send-button:hover .svg-wrapper{animation:send-fly  .6s ease-in-out infinite alternate}
+.uiverse-send-button:hover .svg-wrapper svg{transform:translateX(1.15em) rotate(45deg) scale(1.08)}
+.uiverse-send-button:hover>span:last-child{transform:translateX(4.5em)}
+.uiverse-send-button:active{transform:scale(.97)}
+.uiverse-send-button:before,.uiverse-send-button:after{display:none}
+.uiverse-send-button:hover{background:#fff;color:#111;box-shadow:0 10px 28px rgba(244,197,28,.16)}
+.uiverse-send-button--outline:hover{background:var(--yellow);color:#111}
+@keyframes send-fly{from{transform:translateY(.1em)}to{transform:translateY(-.1em)}}
+@media(max-width:640px){
+ .uiverse-send-button{width:100%;min-height:56px;padding:0 17px;justify-content:flex-start;gap:0}
+ .header .uiverse-send-button{width:auto;min-height:42px;padding:0 11px}
+ .uiverse-send-button .svg-wrapper svg{width:18px;height:18px}
+ .uiverse-send-button>span:last-child{margin-left:9px;font-size:8px}
+ .header .uiverse-send-button>span:last-child{font-size:7px}
+}
+@media(prefers-reduced-motion:reduce){.uiverse-send-button:hover .svg-wrapper{animation:none}.uiverse-send-button .svg-wrapper,.uiverse-send-button .svg-wrapper svg,.uiverse-send-button>span:last-child{transition:none}}
