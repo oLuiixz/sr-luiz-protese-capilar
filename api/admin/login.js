@@ -1,0 +1,4 @@
+import {scryptSync,timingSafeEqual} from "node:crypto";
+import {db,json,method} from "../_lib/db.js";
+import {setSession} from "../_lib/auth.js";
+export default async function handler(req,res){if(!method(req,res,["POST"]))return;try{const {email,password}=req.body||{};const r=await db().query("SELECT id,email,password_hash FROM admin_users WHERE email=$1",[String(email||"").toLowerCase()]);if(!r.rowCount)return json(res,401,{error:"E-mail ou senha incorretos."});const [salt,stored]=r.rows[0].password_hash.split(":");const actual=scryptSync(String(password||""),Buffer.from(salt,"hex"),64);const expected=Buffer.from(stored,"hex");if(actual.length!==expected.length||!timingSafeEqual(actual,expected))return json(res,401,{error:"E-mail ou senha incorretos."});setSession(res,r.rows[0]);return json(res,200,{admin:{id:r.rows[0].id,email:r.rows[0].email}});}catch{return json(res,500,{error:"Falha ao entrar."});}}

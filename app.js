@@ -1,72 +1,13 @@
-const WHATSAPP_NUMBER = ""; // Adicione o número com DDI + DDD, somente números, quando estiver definido.
-const menuToggle = document.querySelector("#menuToggle");
-const nav = document.querySelector("#nav");
-menuToggle?.addEventListener("click", () => {
-  const open = nav.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(open));
-});
-nav?.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
-  nav.classList.remove("open");
-  menuToggle?.setAttribute("aria-expanded", "false");
-}));
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("is-visible");
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
-document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
-
-const dateInput = document.querySelector('input[name="date"]');
-if (dateInput) {
-  const today = new Date();
-  const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-  dateInput.min = localToday;
-}
-
-const phoneInput = document.querySelector('input[name="phone"]');
-phoneInput?.addEventListener("input", () => {
-  let digits = phoneInput.value.replace(/\\D/g, "").slice(0, 11);
-  if (digits.length > 10) digits = digits.replace(/(\\d{2})(\\d{5})(\\d{4})/, "($1) $2-$3");
-  else if (digits.length > 6) digits = digits.replace(/(\\d{2})(\\d{4})(\\d{0,4})/, "($1) $2-$3");
-  else if (digits.length > 2) digits = digits.replace(/(\\d{2})(\\d+)/, "($1) $2");
-  phoneInput.value = digits;
-});
-
-document.querySelector("#bookingForm")?.addEventListener("submit", event => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  if (!form.reportValidity()) return;
-  const data = new FormData(form);
-  const date = new Date(data.get("date") + "T12:00:00");
-  const dateLabel = date.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" });
-  const message = [
-    "Olá! Gostaria de solicitar um horário na SR Luiz Barbearia.",
-    "",
-    "Nome: " + data.get("name"),
-    "Telefone: " + data.get("phone"),
-    "Serviço: " + data.get("service"),
-    "Data: " + dateLabel,
-    "Horário desejado: " + data.get("time"),
-    "",
-    "Aguardo a confirmação. Obrigado!"
-  ].join("\\n");
-  const feedback = document.querySelector("#formFeedback");
-  if (WHATSAPP_NUMBER) {
-    window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message), "_blank", "noopener,noreferrer");
-    feedback.textContent = "Sua solicitação foi preparada. Envie a mensagem pelo WhatsApp para confirmar o horário.";
-  } else {
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(message).then(() => {
-        feedback.textContent = "Resumo copiado! O WhatsApp oficial da barbearia será conectado assim que o número for configurado.";
-      }).catch(() => {
-        feedback.textContent = "Preencha os dados e aguarde a configuração do WhatsApp oficial para enviar sua solicitação.";
-      });
-    } else {
-      feedback.textContent = "Solicitação preenchida. O WhatsApp oficial será conectado assim que o número for configurado.";
-    }
-  }
-});
+const menuToggle=document.querySelector("#menuToggle"),nav=document.querySelector("#nav");
+menuToggle?.addEventListener("click",()=>{const open=nav.classList.toggle("open");menuToggle.setAttribute("aria-expanded",String(open));});
+nav?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");menuToggle?.setAttribute("aria-expanded","false");}));
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("is-visible");observer.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+const form=document.querySelector("#bookingForm"),dateInput=form?.elements.date,serviceSelect=document.querySelector("#bookingService"),timeSelect=document.querySelector("#bookingTime"),feedback=document.querySelector("#formFeedback");
+const today=new Date(),localToday=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);if(dateInput)dateInput.min=localToday;
+const phoneInput=form?.elements.phone;phoneInput?.addEventListener("input",()=>{let d=phoneInput.value.replace(/\D/g,"").slice(0,11);if(d.length>10)d=d.replace(/(\d{2})(\d{5})(\d{4})/,"($1) $2-$3");else if(d.length>6)d=d.replace(/(\d{2})(\d{4})(\d{0,4})/,"($1) $2-$3");else if(d.length>2)d=d.replace(/(\d{2})(\d+)/,"($1) $2");phoneInput.value=d;});
+async function loadServices(){try{const r=await fetch("/api/services"),d=await r.json();if(!r.ok)throw Error(d.error);serviceSelect.innerHTML='<option value="">Selecione um serviço</option>'+d.services.map(s=>'<option value="'+s.id+'">'+s.name+' · '+s.duration_minutes+' min · '+(s.price_cents/100).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})+'</option>').join();if(!d.services.length)serviceSelect.innerHTML='<option value="">Agendamento temporariamente indisponível</option>';}catch{serviceSelect.innerHTML='<option value="">Não foi possível carregar os serviços</option>';}}
+async function loadSlots(){timeSelect.disabled=true;timeSelect.innerHTML='<option value="">Buscando horários...</option>';if(!dateInput.value||!serviceSelect.value){timeSelect.innerHTML='<option value="">Selecione serviço e data</option>';return;}try{const q=new URLSearchParams({date:dateInput.value,serviceId:serviceSelect.value}),r=await fetch("/api/availability?"+q),d=await r.json();if(!r.ok)throw Error(d.error);timeSelect.innerHTML='<option value="">Selecione um horário</option>'+d.slots.map(t=>'<option value="'+t+'">'+t+'</option>').join();if(!d.slots.length)timeSelect.innerHTML='<option value="">Sem horários disponíveis</option>';timeSelect.disabled=!d.slots.length;}catch{timeSelect.innerHTML='<option value="">Erro ao consultar horários</option>';}}
+serviceSelect?.addEventListener("change",loadSlots);dateInput?.addEventListener("change",loadSlots);
+form?.addEventListener("submit",async e=>{e.preventDefault();if(!form.reportValidity())return;const data=new FormData(form);const button=form.querySelector('button[type="submit"]');button.disabled=true;feedback.textContent="Confirmando sua reserva...";try{const r=await fetch("/api/bookings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:data.get("name"),phone:data.get("phone"),service_id:data.get("service_id"),date:data.get("date"),time:data.get("time")})}),d=await r.json();if(!r.ok)throw Error(d.error||"Não foi possível reservar.");const when=new Date(d.appointment.starts_at).toLocaleString("pt-BR",{dateStyle:"full",timeStyle:"short"});feedback.textContent="Agendamento confirmado! "+d.appointment.service_name+" · "+when+". Seu horário está reservado.";form.reset();dateInput.min=localToday;timeSelect.innerHTML='<option value="">Selecione serviço e data</option>';timeSelect.disabled=true;}catch(err){feedback.textContent=err.message;await loadSlots();}finally{button.disabled=false;}});
+loadServices();

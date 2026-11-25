@@ -1,0 +1,6 @@
+import {createHmac,timingSafeEqual} from "node:crypto";
+import {db,json} from "./db.js";
+const sign=value=>createHmac("sha256",process.env.ADMIN_SESSION_SECRET||"").update(value).digest("hex");
+export function setSession(res,admin){const payload=Buffer.from(JSON.stringify({id:admin.id,email:admin.email,exp:Date.now()+7*86400000})).toString("base64url");const token=payload+"."+sign(payload);res.setHeader("Set-Cookie","sr_admin="+token+"; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=604800");}
+export function clearSession(res){res.setHeader("Set-Cookie","sr_admin=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0");}
+export async function requireAdmin(req,res){try{const token=(req.headers.cookie||"").split(";").map(x=>x.trim()).find(x=>x.startsWith("sr_admin="))?.slice(9);if(!token)throw 0;const [payload,signature]=token.split(".");const expected=sign(payload);if(!signature||signature.length!==expected.length||!timingSafeEqual(Buffer.from(signature),Buffer.from(expected)))throw 0;const data=JSON.parse(Buffer.from(payload,"base64url").toString());if(!data.id||data.exp<Date.now())throw 0;const result=await db().query("SELECT id,email FROM admin_users WHERE id=$1",[data.id]);if(!result.rowCount)throw 0;return result.rows[0];}catch{json(res,401,{error:"Sessão expirada. Entre novamente."});return null;}}
