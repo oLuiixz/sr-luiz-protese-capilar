@@ -209,3 +209,60 @@
 .scroll-scissors svg{width:100%;height:100%;fill:none;stroke:var(--yellow);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:640px){.location-map{margin-top:36px;padding:8px}.location-map iframe{height:300px}.map-heading{font-size:8px}.map-heading a{font-size:8px}.scroll-scissors{width:40px;height:40px;top:28vh}}
 @media(prefers-reduced-motion:reduce){.scroll-scissors{display:none}}
+
+
+/* Premium interactive booking calendar */
+.booking-date-field{display:flex;flex-direction:column;gap:9px}
+.booking-field-label{font-size:8px;font-weight:700;letter-spacing:1.5px;color:#b6b2a8}
+.booking-picker-trigger{width:100%;min-height:70px;display:flex;align-items:center;gap:15px;padding:12px 15px;border:1px solid rgba(244,241,233,.16);border-radius:3px;background:linear-gradient(110deg,rgba(244,197,28,.07),rgba(255,255,255,.015));color:var(--white);text-align:left;cursor:pointer;transition:border-color .25s,background .25s,transform .25s}
+.booking-picker-trigger:hover{border-color:rgba(244,197,28,.7);background:rgba(244,197,28,.07);transform:translateY(-1px)}
+.picker-icon{width:39px;height:39px;display:grid;place-items:center;flex:none;border:1px solid rgba(244,197,28,.4);border-radius:3px;color:var(--yellow)}
+.picker-icon svg,.picker-chevron{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.picker-copy{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+.picker-copy strong{font:600 13px var(--font);letter-spacing:0;text-transform:none;color:var(--white)}
+.picker-copy small{font:10px var(--font);letter-spacing:0;text-transform:none;color:var(--muted)}
+.picker-chevron{color:var(--yellow)}
+.booking-selection-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 2px}
+.booking-selection-summary[hidden]{display:none}
+.booking-selection-summary>span{font-size:8px;letter-spacing:1.4px;color:var(--muted)}
+.booking-time-options{display:flex;gap:7px}
+.selected-time-chip{padding:7px 12px;border:1px solid rgba(244,197,28,.55);border-radius:2px;color:var(--yellow);font-size:11px;font-weight:700}
+.booking-calendar-dialog{width:min(94vw,510px);max-width:510px;max-height:90svh;overflow:auto;padding:27px;border:1px solid rgba(244,197,28,.35);border-radius:5px;background:#121210;color:var(--white);box-shadow:0 30px 100px rgba(0,0,0,.65)}
+.booking-calendar-dialog::backdrop{background:rgba(0,0,0,.82);backdrop-filter:blur(8px)}
+.calendar-dialog-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
+.calendar-dialog-head .micro-label{margin:0 0 9px}
+.calendar-dialog-head h3{font:600 29px/.98 var(--display);margin:0 0 9px}
+.calendar-dialog-head p{font-size:11px;color:var(--muted);line-height:1.6;margin:0}
+.calendar-close,.calendar-month-nav button{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line);border-radius:3px;background:#1b1b18;color:var(--white);cursor:pointer}
+.calendar-close svg,.calendar-month-nav svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.calendar-month-nav{display:flex;justify-content:space-between;align-items:center;margin:27px 0 18px}
+.calendar-month-nav strong{font:600 16px var(--display);letter-spacing:1px;text-transform:capitalize}
+.calendar-month-nav button:disabled{opacity:.25;cursor:not-allowed}
+.calendar-weekdays,.calendar-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+.calendar-weekdays span{text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;color:#858177;padding:7px 0}
+.calendar-day{position:relative;aspect-ratio:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid rgba(244,241,233,.1);border-radius:3px;background:#191916;color:var(--white);font:600 12px var(--font);cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.calendar-day.is-available{border-color:rgba(244,197,28,.3);background:rgba(244,197,28,.045)}
+.calendar-day.is-available:hover{border-color:var(--yellow);background:rgba(244,197,28,.14);transform:translateY(-2px)}
+.calendar-day.is-selected{border-color:var(--yellow);background:var(--yellow);color:#111;box-shadow:0 0 0 2px rgba(244,197,28,.13)}
+.calendar-day.is-unavailable{border-color:rgba(255,75,75,.14);background:rgba(255,75,75,.035);color:#716b66;cursor:not-allowed}
+.calendar-day.is-unavailable .day-status{font:700 16px/10px var(--font);color:#ff5353}
+.calendar-day.is-past{opacity:.2;cursor:not-allowed}
+.calendar-day.is-loading{opacity:.45;cursor:wait}
+.day-status{height:7px;font-style:normal;font-size:8px}
+.calendar-empty{aspect-ratio:1}
+.calendar-loading{grid-column:1/-1;text-align:center;padding:22px 8px;color:var(--muted);font-size:11px;line-height:1.6}
+.calendar-no-dates{padding:12px 0}
+.calendar-legend{display:flex;gap:20px;align-items:center;margin-top:17px;padding-top:15px;border-top:1px solid var(--line);font-size:9px;color:var(--muted)}
+.calendar-legend>span{display:flex;align-items:center;gap:7px}
+.legend-dot{width:8px;height:8px;border-radius:50%;background:var(--yellow)}
+.legend-x{font-style:normal;font-size:16px;line-height:10px;color:#ff5353}
+.calendar-times{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.calendar-times[hidden]{display:none}
+.calendar-times-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}
+.calendar-times-heading strong{font-size:12px;text-transform:capitalize}
+.calendar-times-heading span{font-size:8px;letter-spacing:1.1px;color:var(--yellow)}
+.calendar-time-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.calendar-time{min-height:39px;border:1px solid rgba(244,197,28,.25);border-radius:3px;background:#1a1a16;color:var(--white);font:600 11px var(--font);cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.calendar-time:hover,.calendar-time.is-selected{border-color:var(--yellow);background:var(--yellow);color:#111}
+@media(max-width:640px){.booking-calendar-dialog{padding:21px 16px;width:calc(100vw - 24px);max-height:88svh}.calendar-dialog-head h3{font-size:26px}.calendar-weekdays,.calendar-days{gap:5px}.calendar-day{font-size:11px}.calendar-time-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.booking-picker-trigger{min-height:66px}.picker-copy strong{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.booking-picker-trigger,.calendar-day,.calendar-time{transition:none}}
