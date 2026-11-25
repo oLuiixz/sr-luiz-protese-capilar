@@ -103,7 +103,8 @@
             <label>SEU NOME<input name="name" type="text" placeholder="Como podemos te chamar?" required minlength="2" /></label>
             <label>SEU TELEFONE<input name="phone" type="tel" placeholder="(00) 00000-0000" required /></label>
             <label>SERVIÇO<select name="service_id" id="bookingService" required><option value="">Carregando serviços...</option></select></label>
-            <div class="form-row"><label>DATA<input name="date" type="date" required /></label><label>HORÁRIO<select name="time" id="bookingTime" required disabled><option value="">Selecione serviço e data</option></select></label></div>
+            <div class="booking-date-field"><span class="booking-field-label">DATA E HORÁRIO</span><button class="booking-picker-trigger" id="openBookingCalendar" type="button" aria-haspopup="dialog" aria-controls="bookingCalendarDialog"><span class="picker-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></span><span class="picker-copy"><strong id="bookingSelection">Escolha um dia e horário</strong><small id="bookingSelectionHint">Toque para abrir o calendário</small></span><svg class="picker-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button><input name="date" id="bookingDate" type="hidden" required /><input name="time" id="bookingTime" type="hidden" required /></div>
+            <div class="booking-selection-summary" id="bookingTimeSummary" hidden><span>HORÁRIOS DISPONÍVEIS</span><div class="booking-time-options" id="bookingTimeOptions"></div></div>
             <button type="submit" class="uiverse-letter-button" alt="SOLICITAR AGENDAMENTO"><i>S</i><i>O</i><i>L</i><i>I</i><i>C</i><i>I</i><i>T</i><i>A</i><i>R</i><i class="letter-space">&nbsp;</i><i>A</i><i>G</i><i>E</i><i>N</i><i>D</i><i>A</i><i>M</i><i>E</i><i>N</i><i>T</i><i>O</i></button>
             <p class="form-legal">A reserva é confirmada automaticamente quando você conclui o agendamento.</p><div class="form-feedback" id="formFeedback" role="status" aria-live="polite"></div>
           </form>
@@ -122,6 +123,14 @@
         </div>
       </section>
     </main>
+    <dialog class="booking-calendar-dialog" id="bookingCalendarDialog" aria-labelledby="calendarTitle">
+      <div class="calendar-dialog-head"><div><span class="micro-label">SR LUIZ / AGENDA</span><h3 id="calendarTitle">Escolha seu horário</h3><p>Selecione um dia disponível e depois o melhor horário.</p></div><button type="button" class="calendar-close" id="closeBookingCalendar" aria-label="Fechar calendário"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <div class="calendar-month-nav"><button type="button" id="calendarPrev" aria-label="Mês anterior"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button><strong id="calendarMonthLabel"></strong><button type="button" id="calendarNext" aria-label="Próximo mês"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button></div>
+      <div class="calendar-weekdays"><span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span></div>
+      <div class="calendar-days" id="calendarDays" aria-live="polite"><p class="calendar-loading">Escolha um serviço para consultar a agenda.</p></div>
+      <div class="calendar-legend"><span><i class="legend-dot available"></i> Disponível</span><span><i class="legend-x">×</i> Sem horários</span></div>
+      <div class="calendar-times" id="calendarTimes" hidden><div class="calendar-times-heading"><strong id="calendarSelectedDate"></strong><span>ESCOLHA UM HORÁRIO</span></div><div class="calendar-time-grid" id="calendarTimeGrid"></div></div>
+    </dialog>
     <dialog class="video-dialog" id="videoDialog" aria-label="Reprodutor de vídeo">
       <button class="video-dialog-close" type="button" aria-label="Fechar vídeo"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
       <video id="galleryPlayer" controls playsinline preload="none"></video>
